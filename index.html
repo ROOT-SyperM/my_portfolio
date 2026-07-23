@@ -353,7 +353,7 @@
 
     .certs-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.2rem;
     }
 
@@ -383,12 +383,163 @@
       font-size: 0.8rem;
       font-weight: 500;
       overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: box-shadow 0.25s;
     }
 
-    .cert-card .cert-img img { width: 100%; height: 100%; object-fit: cover; }
+    .cert-card .cert-img:hover {
+      box-shadow: 0 0 0 3px var(--accent);
+    }
+
+    .cert-card .cert-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .cert-card .cert-img:hover img {
+      transform: scale(1.03);
+    }
+
+    .cert-img .zoom-hint {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+
+    .cert-card .cert-img:hover .zoom-hint {
+      opacity: 1;
+    }
+
     .cert-card h3 { font-size: 0.95rem; margin-bottom: 0.2rem; }
     .cert-card p { font-size: 0.82rem; color: var(--text-secondary); }
     .cert-card .date { display: block; margin-top: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--accent); }
+
+    /* ===== MODAL (Lightbox) ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 85vh;
+      animation: modalSlideUp 0.35s ease;
+    }
+
+    @keyframes modalSlideUp {
+      from { opacity: 0; transform: scale(0.92) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 78vh;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      object-fit: contain;
+      display: block;
+      background: #111;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -48px;
+      right: 0;
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .modal-caption {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    .modal-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .modal-nav-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .modal-prev { left: -64px; }
+    .modal-next { right: -64px; }
+
+    .modal-counter {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 0.82rem;
+      font-variant-numeric: tabular-nums;
+    }
 
     /* ===== PROJECTS ===== */
     .projects-grid {
@@ -514,19 +665,17 @@
     .reveal-d2 { transition-delay: 0.2s; }
     .reveal-d3 { transition-delay: 0.3s; }
 
-    /* ================================================================
-       RESPONSIVE (mobile-first адаптация)
-       ================================================================ */
+    /* ===== RESPONSIVE ===== */
 
-    /* Планшеты и маленькие ноутбуки */
     @media (max-width: 900px) {
       section { padding: 3.5rem 1.2rem; }
       .section-title { font-size: 1.7rem; }
+      .modal-prev { left: 8px; }
+      .modal-next { right: 8px; }
+      .modal-nav-btn { width: 40px; height: 40px; font-size: 1.2rem; }
     }
 
-    /* Телефоны */
     @media (max-width: 640px) {
-      /* Навигация */
       nav { padding: 0.7rem 1rem; }
       nav .logo { font-size: 1rem; }
 
@@ -547,18 +696,15 @@
       .nav-links.open { display: flex; }
       .menu-toggle { display: block; }
 
-      /* Секции */
       section { padding: 2.5rem 1rem; }
       .section-title { font-size: 1.4rem; margin-bottom: 1.2rem; }
 
-      /* Hero */
       #hero { min-height: auto; padding-top: 5rem; padding-bottom: 3rem; }
       #hero h1 { font-size: 1.7rem; }
       #hero .subtitle { font-size: 0.9rem; }
       .hero-stats { gap: 1.2rem; }
       .hero-stats .stat-num { font-size: 1.2rem; }
 
-      /* About */
       #about {
         margin: 0 0.8rem 1.5rem;
         padding: 1.5rem 1rem;
@@ -570,22 +716,18 @@
       .about-text p { font-size: 0.88rem; }
       .skills-grid span { font-size: 0.72rem; padding: 0.25rem 0.7rem; }
 
-      /* Directions */
       #directions { padding-bottom: 1.5rem; }
       .dir-grid { grid-template-columns: 1fr; gap: 0.8rem; }
       .dir-card { padding: 1.2rem 1rem; }
 
-      /* Certificates */
       #certificates { padding-bottom: 1.5rem; }
       .certs-grid { grid-template-columns: 1fr; gap: 0.8rem; }
       .cert-card { padding: 1rem; }
       .cert-card .cert-img { aspect-ratio: 16/9; }
 
-      /* Projects */
       .projects-grid { grid-template-columns: 1fr; gap: 0.8rem; }
       .project-card { padding: 1.2rem; }
 
-      /* Contact */
       #contact {
         margin: 1.5rem 0.8rem 1rem;
         padding: 1.8rem 1.2rem;
@@ -593,11 +735,17 @@
       }
       .contact-links { grid-template-columns: 1fr; gap: 0.3rem; }
 
-      /* Footer */
       footer { padding: 1rem; font-size: 0.75rem; }
+
+      /* Modal mobile */
+      .modal-overlay { padding: 0.5rem; }
+      .modal-content img { max-height: 65vh; border-radius: 8px; }
+      .modal-close { top: -40px; right: 0; width: 34px; height: 34px; font-size: 1.2rem; }
+      .modal-nav-btn { width: 36px; height: 36px; font-size: 1.1rem; }
+      .modal-caption { font-size: 0.85rem; margin-top: 0.8rem; }
+      .modal-counter { font-size: 0.75rem; bottom: -32px; }
     }
 
-    /* Очень маленькие экраны (< 380px) */
     @media (max-width: 380px) {
       #hero h1 { font-size: 1.4rem; }
       .section-title { font-size: 1.2rem; }
@@ -619,7 +767,7 @@
       </span>
       ROOT-SyperM
     </a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Меню">☰</button>
+    <button class="menu-toggle" id="menuToggle" aria-label="Меню">&#9776;</button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">Обо мне</a></li>
       <li><a href="#directions">Направления</a></li>
@@ -760,26 +908,38 @@
     <div class="section-title">Подтверждённая квалификация</div>
     <div class="certs-grid">
       <div class="cert-card">
-        <div class="cert-img">
-          <img src="img1.jpg" alt="Сертификат 1" class="certImage" />
+        <div class="cert-img" onclick="openModal(0)">
+          <img src="C:/Users/Михаил/Downloads/img1.jpg" alt="Сертификат 1" class="certImage" />
+          <span class="zoom-hint">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Увеличить
+          </span>
         </div>
-        <h3>Сертификат 1</h3>
-        <p>О прохождении курса "Введение в профессию: специалист по информационной безопасности" в школе Сyber Yozh</p>
-        <span class="date">—</span>
+        <h3>Сертификат</h3>
+        <p>О прохождении курса "Введение в профессию: специалист по информационной безопасности" в школе Cyber Yozh</p>
+        <span class="date">Дата выдачи: 23.07.2026</span>
       </div>
       <div class="cert-card">
-        <div class="cert-img">
+        <div class="cert-img" onclick="openModal(1)">
           <img src="" alt="Сертификат 2" style="display:none" class="certImage" />
           <span>[img2]</span>
+          <span class="zoom-hint">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Увеличить
+          </span>
         </div>
         <h3>Сертификат 2</h3>
         <p>Добавлю позже</p>
         <span class="date">—</span>
       </div>
       <div class="cert-card">
-        <div class="cert-img">
+        <div class="cert-img" onclick="openModal(2)">
           <img src="" alt="Сертификат 3" style="display:none" class="certImage" />
           <span>[img3]</span>
+          <span class="zoom-hint">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Увеличить
+          </span>
         </div>
         <h3>Сертификат 3</h3>
         <p>Добавлю позже</p>
@@ -909,7 +1069,20 @@
     &copy; 2026 <span class="accent">ROOT-SyperM</span> | Built with engineering mindset
   </footer>
 
+  <!-- MODAL -->
+  <div class="modal-overlay" id="certModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()" aria-label="Закрыть">&times;</button>
+      <button class="modal-nav-btn modal-prev" onclick="navigateModal(-1)" aria-label="Назад">&#8249;</button>
+      <button class="modal-nav-btn modal-next" onclick="navigateModal(1)" aria-label="Вперед">&#8250;</button>
+      <img id="modalImg" src="" alt="Сертификат" />
+      <div class="modal-caption" id="modalCaption"></div>
+      <div class="modal-counter" id="modalCounter"></div>
+    </div>
+  </div>
+
   <script>
+    // Mobile menu
     document.getElementById('menuToggle').addEventListener('click', () => {
       document.getElementById('navLinks').classList.toggle('open');
     });
@@ -919,6 +1092,7 @@
       });
     });
 
+    // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) e.target.classList.add('visible');
@@ -927,6 +1101,66 @@
 
     document.querySelectorAll('.reveal, section, #about, #contact, .cert-card, .project-card, .dir-card')
       .forEach(el => { el.classList.add('reveal'); observer.observe(el); });
+
+    // === MODAL (Lightbox) ===
+    const certData = [
+      { src: 'C:/Users/\u041c\u0438\u0445\u0430\u0438\u043b/Downloads/img1.jpg', title: 'Сертификат 1 — Cyber Yozh' },
+      { src: '', title: 'Сертификат 2' },
+      { src: '', title: 'Сертификат 3' }
+    ];
+
+    let currentSlide = 0;
+    const modal = document.getElementById('certModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalCaption = document.getElementById('modalCaption');
+    const modalCounter = document.getElementById('modalCounter');
+
+    function openModal(index) {
+      currentSlide = index;
+      updateModal();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function navigateModal(dir) {
+      // find next cert that has an image
+      let tries = 0;
+      do {
+        currentSlide = (currentSlide + dir + certData.length) % certData.length;
+        tries++;
+      } while (!certData[currentSlide].src && tries < certData.length);
+      updateModal();
+    }
+
+    function updateModal() {
+      const cert = certData[currentSlide];
+      if (cert.src) {
+        modalImg.src = cert.src;
+        modalImg.style.display = 'block';
+      } else {
+        modalImg.style.display = 'none';
+      }
+      modalCaption.textContent = cert.title;
+      modalCounter.textContent = (currentSlide + 1) + ' / ' + certData.length;
+    }
+
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('active')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') navigateModal(-1);
+      if (e.key === 'ArrowRight') navigateModal(1);
+    });
   </script>
 </body>
 </html>
