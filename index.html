@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -426,7 +427,8 @@
 
     .cert-card h3 { font-size: 0.95rem; margin-bottom: 0.2rem; }
     .cert-card p { font-size: 0.82rem; color: var(--text-secondary); }
-    .cert-card .date { display: block; margin-top: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--accent); }
+    .cert-card .date { display: inline-block; margin-top: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); transition: color 0.2s, border-color 0.2s; }
+    .cert-card .date:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
 
     /* ===== MODAL (Lightbox) ===== */
     .modal-overlay {
@@ -915,9 +917,9 @@
             Увеличить
           </span>
         </div>
-        <h3>Сертификат</h3>
+        <h3>Сертификат 1</h3>
         <p>О прохождении курса "Введение в профессию: специалист по информационной безопасности" в школе Cyber Yozh</p>
-        <span class="date">Дата выдачи: 23.07.2026</span>
+        <a class="date" href="https://edu.cyberyozh.com/verification?id=Y0GRY84N65VT" target="_blank" rel="noopener">Проверка сертификата</a>
       </div>
       <div class="cert-card">
         <div class="cert-img" onclick="openModal(1)">
