@@ -401,7 +401,7 @@
     }
 
     .cert-card .cert-img:hover img {
-      transform: scale(1.03);
+      transform: scale(1.05);
     }
 
     .cert-img .zoom-hint {
@@ -425,8 +425,8 @@
       opacity: 1;
     }
 
-    .cert-card h3 { font-size: 0.95rem; margin-bottom: 0.2rem; }
-    .cert-card p { font-size: 0.82rem; color: var(--text-secondary); }
+    .cert-card h3 { font-size: 0.95rem; margin-bottom: 0.2rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cert-card p { font-size: 0.82rem; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
     .cert-card .date { display: inline-block; margin-top: 0.5rem; font-size: 0.75rem; font-weight: 600; color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); transition: color 0.2s, border-color 0.2s; }
     .cert-card .date:hover { color: var(--accent-dark); border-color: var(--accent-dark); }
 
@@ -436,12 +436,12 @@
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(0, 0, 0, 0.88);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       align-items: center;
       justify-content: center;
-      padding: 2rem;
+      padding: 3rem;
     }
 
     .modal-overlay.active {
@@ -456,91 +456,100 @@
 
     .modal-content {
       position: relative;
-      max-width: 90vw;
-      max-height: 85vh;
+      max-width: 360px;
+      width: 80vw;
+      max-height: 65vh;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
       animation: modalSlideUp 0.35s ease;
     }
 
     @keyframes modalSlideUp {
-      from { opacity: 0; transform: scale(0.92) translateY(20px); }
+      from { opacity: 0; transform: scale(0.95) translateY(12px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
     .modal-content img {
-      max-width: 100%;
-      max-height: 78vh;
-      border-radius: 12px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-height: 42vh;
       object-fit: contain;
       display: block;
-      background: #111;
+      background: #f5f5f5;
     }
 
     .modal-close {
       position: absolute;
-      top: -48px;
-      right: 0;
-      width: 38px;
-      height: 38px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
       border-radius: 50%;
       color: #fff;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.2s;
       line-height: 1;
+      z-index: 10;
     }
 
     .modal-close:hover {
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.75);
       transform: rotate(90deg);
     }
 
     .modal-caption {
       text-align: center;
-      color: rgba(255, 255, 255, 0.85);
-      font-size: 0.95rem;
-      margin-top: 1rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      padding: 0.8rem 1rem;
+      background: #fff;
       font-weight: 500;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
     }
 
     .modal-nav-btn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 46px;
-      height: 46px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 42px;
+      height: 42px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--border);
       border-radius: 50%;
-      color: #fff;
-      font-size: 1.4rem;
+      color: var(--text);
+      font-size: 1.3rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.2s;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
 
     .modal-nav-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    .modal-prev { left: -64px; }
-    .modal-next { right: -64px; }
+    .modal-prev { left: -54px; }
+    .modal-next { right: -54px; }
 
     .modal-counter {
-      position: absolute;
-      bottom: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: rgba(255, 255, 255, 0.45);
-      font-size: 0.82rem;
-      font-variant-numeric: tabular-nums;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      padding-bottom: 0.6rem;
+      background: #fff;
     }
 
     /* ===== PROJECTS ===== */
@@ -740,12 +749,15 @@
       footer { padding: 1rem; font-size: 0.75rem; }
 
       /* Modal mobile */
-      .modal-overlay { padding: 0.5rem; }
-      .modal-content img { max-height: 65vh; border-radius: 8px; }
-      .modal-close { top: -40px; right: 0; width: 34px; height: 34px; font-size: 1.2rem; }
+      .modal-overlay { padding: 1rem; }
+      .modal-content { max-width: 95vw; border-radius: 12px; }
+      .modal-content img { max-height: 60vh; }
+      .modal-close { top: 8px; right: 8px; width: 30px; height: 30px; font-size: 1.1rem; }
       .modal-nav-btn { width: 36px; height: 36px; font-size: 1.1rem; }
-      .modal-caption { font-size: 0.85rem; margin-top: 0.8rem; }
-      .modal-counter { font-size: 0.75rem; bottom: -32px; }
+      .modal-prev { left: 6px; }
+      .modal-next { right: 6px; }
+      .modal-caption { font-size: 0.82rem; padding: 0.6rem 0.8rem; }
+      .modal-counter { font-size: 0.72rem; }
     }
 
     @media (max-width: 380px) {
@@ -911,13 +923,13 @@
     <div class="certs-grid">
       <div class="cert-card">
         <div class="cert-img" onclick="openModal(0)">
-          <img src="img1.jpg" alt="Сертификат 1" class="certImage" />
+          <img src="img1.jpg" alt="Сертификат" class="certImage" />
           <span class="zoom-hint">
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
             Увеличить
           </span>
         </div>
-        <h3>Сертификат 1</h3>
+        <h3>Сертификат</h3>
         <p>О прохождении курса "Введение в профессию: специалист по информационной безопасности" в школе Cyber Yozh</p>
         <a class="date" href="https://edu.cyberyozh.com/verification?id=Y0GRY84N65VT" target="_blank" rel="noopener">Проверка сертификата</a>
       </div>
@@ -1106,7 +1118,7 @@
 
     // === MODAL (Lightbox) ===
     const certData = [
-      { src: 'img1.jpg', title: 'Сертификат — Cyber Yozh' },
+      { src: 'img1.jpg', title: 'Сертификат 1 — Cyber Yozh' },
       { src: '', title: 'Сертификат 2' },
       { src: '', title: 'Сертификат 3' }
     ];
